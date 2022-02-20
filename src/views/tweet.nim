@@ -56,6 +56,8 @@ proc renderAlbum(tweet: Tweet): VNode =
               orig = photo.url
               small = if named: photo.url else: photo.url & "?name=small&format=webp"
             a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
+              if photo.altText.isEmptyOrWhitespace.not:
+                p(class="altText"): text "Image description : \A" & photo.altText
               genImg(Photo(url: small, altText: photo.altText))
 
 proc isPlaybackEnabled(prefs: Prefs; playbackType: VideoType): bool =
