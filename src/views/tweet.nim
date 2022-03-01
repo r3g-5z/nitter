@@ -58,7 +58,8 @@ proc renderAlbum(tweet: Tweet): VNode =
             a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
               if photo.altText.isEmptyOrWhitespace.not:
                 p(class="altText"): text "Image description : \A" & photo.altText
-              genImg(Photo(url: small, altText: photo.altText))
+              let imgClass = if tweet.possibly_sensitive: "sensitive" else: ""
+              genImg(Photo(url: small, altText: photo.altText), imgClass)
 
 proc isPlaybackEnabled(prefs: Prefs; playbackType: VideoType): bool =
   case playbackType
