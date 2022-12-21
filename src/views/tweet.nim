@@ -53,8 +53,9 @@ proc renderAlbum(tweet: Tweet): VNode =
           tdiv(class="attachment image"):
             let
               named = "name=" in photo
-              small = if named: photo else: photo & smallWebp
-            a(href=getOrigPicUrl(photo), class="still-image", target="_blank"):
+              orig = photo
+              small = if named: photo else: photo & "?name=small&format=webp"
+            a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
               genImg(small)
 
 proc isPlaybackEnabled(prefs: Prefs; playbackType: VideoType): bool =
