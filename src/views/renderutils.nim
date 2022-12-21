@@ -106,3 +106,7 @@ proc getAvatarClass*(prefs: Prefs): string =
     "avatar"
   else:
     "avatar round"
+
+proc isFollowing*(name, following: string): bool =
+  let following = following.split(",")
+  return name in following

@@ -9,8 +9,8 @@ import jester
 import types, config, prefs, formatters, redis_cache, http_pool, tokens
 import views/[general, about]
 import routes/[
-  preferences, timeline, status, media, search, rss, list, debug,
-  unsupported, embed, notes, resolver, router_utils]
+  home, preferences, timeline, status, media, search, rss, list, debug,
+  unsupported, embed, notes, resolver, router_utils, follow]
 
 const instancesUrl = "https://github.com/zedeus/nitter/wiki/Instances"
 const issuesUrl = "https://github.com/zedeus/nitter/issues"
@@ -60,9 +60,6 @@ settings:
   reusePort = true
 
 routes:
-  get "/":
-    resp renderMain(renderSearch(), request, cfg, themePrefs())
-
   get "/about":
     resp renderMain(renderAbout(), request, cfg, themePrefs())
 
@@ -91,6 +88,8 @@ routes:
     resp Http429, showError(
       &"Instance has been rate limited.<br>Use {link} or try again later.", cfg)
 
+  extend home, ""
+  extend follow, ""
   extend unsupported, ""
   extend preferences, ""
   extend resolver, ""
