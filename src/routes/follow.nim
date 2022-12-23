@@ -30,7 +30,7 @@ proc createFollowRouter*(cfg: Config) =
         toAdd = @"name"
         updated = addUserToFollowing(following, toAdd)
       setCookie("following", updated, daysForward(360),
-                httpOnly=true, secure=cfg.useHttps, path="/")
+                httpOnly=true, secure=cfg.useHttps, path="/", sameSite=Strict)
       redirect(refPath())
     post "/unfollow/@name":
       let
@@ -38,5 +38,5 @@ proc createFollowRouter*(cfg: Config) =
         remove = @"name"
         updated = removeUserFromFollowing(following, remove)
       setCookie("following", updated, daysForward(360),
-                httpOnly=true, secure=cfg.useHttps, path="/")
+                httpOnly=true, secure=cfg.useHttps, path="/", sameSite=Strict)
       redirect(refPath())

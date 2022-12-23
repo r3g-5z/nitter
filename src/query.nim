@@ -15,7 +15,7 @@ const
   emptyQuery* = "include:nativeretweets"
 
 template `@`(param: string): untyped =
-  if param in pms: pms[param]
+  if param in pms: decodeUrl(pms[param])
   else: ""
 
 proc initQuery*(pms: Table[string, string]; name=""): Query =
