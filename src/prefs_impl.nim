@@ -80,6 +80,9 @@ genPrefs:
     hideReplies(checkbox, false):
       "Hide tweet replies"
 
+    blurSensitive(checkbox, true):
+      "Blur sensitive images"
+
     squareAvatars(checkbox, false):
       "Square profile pictures"
 

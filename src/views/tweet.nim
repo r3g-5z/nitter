@@ -40,7 +40,7 @@ proc renderHeader(tweet: Tweet; retweet: string; prefs: Prefs): VNode =
           a(href=getLink(tweet), title=tweet.getTime):
             text tweet.time.getShortTime
 
-proc renderAlbum(tweet: Tweet): VNode =
+proc renderAlbum(prefs: Prefs; tweet: Tweet): VNode =
   let
     groups = if tweet.photos.len < 3: @[tweet.photos]
              else: tweet.photos.distribute(2)
@@ -58,7 +58,7 @@ proc renderAlbum(tweet: Tweet): VNode =
             a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
               if photo.altText.isEmptyOrWhitespace.not:
                 p(class="altText"): text "Image description : \A" & photo.altText
-              let imgClass = if tweet.possibly_sensitive: "sensitive" else: ""
+              let imgClass = if tweet.possibly_sensitive and prefs.blurSensitive: "sensitive" else: ""
               genImg(Photo(url: small, altText: photo.altText), imgClass)
 
 proc isPlaybackEnabled(prefs: Prefs; playbackType: VideoType): bool =
@@ -229,7 +229,7 @@ proc renderMediaTags(tags: seq[User]): VNode =
 proc renderQuoteMedia(quote: Tweet; prefs: Prefs; path: string): VNode =
   buildHtml(tdiv(class="quote-media-container")):
     if quote.photos.len > 0:
-      renderAlbum(quote)
+      renderAlbum(prefs, quote)
     elif quote.video.isSome:
       renderVideo(quote.video.get(), prefs, path)
     elif quote.gif.isSome:
@@ -336,7 +336,7 @@ proc renderTweet*(tweet: Tweet; prefs: Prefs; path: string; class=""; index=0;
         renderCard(tweet.card.get(), prefs, path)
 
       if tweet.photos.len > 0:
-        renderAlbum(tweet)
+        renderAlbum(prefs, tweet)
       elif tweet.video.isSome:
         renderVideo(tweet.video.get(), prefs, path)
         views = tweet.video.get().views
