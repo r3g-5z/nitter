@@ -1,25 +1,5 @@
-// @license http://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
-// SPDX-License-Identifier: AGPL-3.0-only
-function playVideo(overlay) {
-    const video = overlay.parentElement.querySelector('video');
-    const url = video.getAttribute("data-url");
-    video.setAttribute("controls", "");
-    overlay.style.display = "none";
-
-    if (Hls.isSupported()) {
-        var hls = new Hls({autoStartLoad: false});
-        hls.loadSource(url);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-            hls.loadLevel = hls.levels.length - 1;
-            hls.startLoad();
-            video.play();
-        });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
-        video.addEventListener('canplay', function() {
-            video.play();
-        });
-    }
-}
+// @license http://www.apache.org/licenses/LICENSE-2.0 Apache-2.0
+// @source  https://github.com/video-dev/hls.js
+// @version v1.2.9
+function playVideo(e){const t=e.parentElement.querySelector("video"),a=t.getAttribute("data-url");if(t.setAttribute("controls",""),e.style.display="none",Hls.isSupported()){var l=new Hls({autoStartLoad:!1});l.loadSource(a),l.attachMedia(t),l.on(Hls.Events.MANIFEST_PARSED,(function(){l.loadLevel=l.levels.length-1,l.startLoad(),t.play()}))}else t.canPlayType("application/vnd.apple.mpegurl")&&(t.src=a,t.addEventListener("canplay",(function(){t.play()})))}
 // @license-end
