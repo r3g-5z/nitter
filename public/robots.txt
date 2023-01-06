@@ -1,5 +1,5 @@
-User-agent: *
+User-Agent: *
+Crawl-Delay: 1
 Disallow: /
-Crawl-delay: 1
-User-agent: Twitterbot
+User-Agent: Twitterbot
 Disallow:
