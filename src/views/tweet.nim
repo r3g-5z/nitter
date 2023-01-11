@@ -54,7 +54,7 @@ proc renderAlbum(prefs: Prefs; tweet: Tweet): VNode =
             let
               named = "name=" in photo.url
               orig = photo.url
-              small = if named: photo.url else: photo.url & "?name=small&format=webp"
+              small = if named: photo.url else: photo.url & "?name=small"
             a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
               if photo.altText.isEmptyOrWhitespace.not:
                 p(class="altText"): text "Image description : \A" & photo.altText
