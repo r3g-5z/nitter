@@ -53,11 +53,10 @@ proc renderAlbum(prefs: Prefs; tweet: Tweet): VNode =
           tdiv(class="attachment image"):
             let
               named = "name=" in photo.url
-              orig = photo.url
-              small = if named: photo.url else: photo.url & "?name=small"
-            a(href=getOrigPicUrl(orig), class="still-image", target="_blank"):
+              small = if named: photo.url else: photo.url & smallWebp
+            a(href=getOrigPicUrl(photo.url), class="still-image", target="_blank"):
               if photo.altText.isEmptyOrWhitespace.not:
-                p(class="altText"): text "Image description : \A" & photo.altText
+                p(class="altText"): text "Image description: \A" & photo.altText
               let imgClass = if tweet.possibly_sensitive and prefs.blurSensitive: "sensitive" else: ""
               genImg(Photo(url: small, altText: photo.altText), imgClass)
 
